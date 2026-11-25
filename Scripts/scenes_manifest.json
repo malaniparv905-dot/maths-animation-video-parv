@@ -37,9 +37,9 @@
       "start_sec": 40.0,
       "end_sec": 58.0,
       "hold_frame_sec": 55.0,
-      "lead_in_sec": 0.5,
+      "lead_in_sec": 0.4,
       "tail_pad_sec": 0.5,
-      "max_trim_sec": 2.0
+      "max_trim_sec": 0.0
     },
     {
       "id": "Scene_03",
@@ -50,7 +50,7 @@
       "hold_frame_sec": 67.0,
       "lead_in_sec": 0.4,
       "tail_pad_sec": 0.4,
-      "max_trim_sec": 1.0
+      "max_trim_sec": 0.0
     },
     {
       "id": "Scene_04",
@@ -61,7 +61,7 @@
       "hold_frame_sec": 77.0,
       "lead_in_sec": 0.4,
       "tail_pad_sec": 0.4,
-      "max_trim_sec": 0.5
+      "max_trim_sec": 0.0
     },
     {
       "id": "Scene_05",
@@ -83,7 +83,7 @@
       "hold_frame_sec": 132.0,
       "lead_in_sec": 0.4,
       "tail_pad_sec": 0.4,
-      "max_trim_sec": 1.0
+      "max_trim_sec": 0.0
     },
     {
       "id": "Scene_07",
@@ -94,7 +94,7 @@
       "hold_frame_sec": 147.0,
       "lead_in_sec": 0.4,
       "tail_pad_sec": 0.4,
-      "max_trim_sec": 1.0
+      "max_trim_sec": 0.0
     },
     {
       "id": "Scene_08",
@@ -108,26 +108,69 @@
       "max_trim_sec": 0.0
     },
     {
-      "id": "Scene_09a",
-      "title": "Worked Example Part 1 (Steps 1 & 2)",
+      "id": "Scene_09a_Step1",
+      "title": "Worked Example Step 1 (R2 <- R2 - R1)",
       "audio_stem": "Scene_09a_Forward_Elimination_Part1",
+      "audio_start_sec": 0.0,
+      "audio_end_sec": 18.1,
       "start_sec": 170.0,
+      "end_sec": 194.0,
+      "hold_frame_sec": 190.0,
+      "lead_in_sec": 0.6,
+      "tail_pad_sec": 0.8,
+      "max_trim_sec": 6.0
+    },
+    {
+      "id": "Scene_09a_Step2",
+      "title": "Worked Example Step 2 (R2 <- -R2)",
+      "audio_stem": "Scene_09a_Forward_Elimination_Part1",
+      "audio_start_sec": 18.1,
+      "audio_end_sec": 33.54,
+      "start_sec": 194.0,
       "end_sec": 214.0,
-      "hold_frame_sec": 212.0,
-      "lead_in_sec": 0.5,
-      "tail_pad_sec": 0.5,
+      "hold_frame_sec": 211.0,
+      "lead_in_sec": 0.6,
+      "tail_pad_sec": 0.8,
+      "max_trim_sec": 4.0
+    },
+    {
+      "id": "Scene_09b_Step3",
+      "title": "Worked Example Step 3 (R3 <- R3 - R2)",
+      "audio_stem": "Scene_09b_Forward_Elimination_And_BackSub",
+      "audio_start_sec": 0.0,
+      "audio_end_sec": 17.1,
+      "start_sec": 214.0,
+      "end_sec": 238.0,
+      "hold_frame_sec": 234.0,
+      "lead_in_sec": 0.6,
+      "tail_pad_sec": 0.8,
+      "max_trim_sec": 6.0
+    },
+    {
+      "id": "Scene_09b_Step4",
+      "title": "Worked Example Step 4 (R3 <- 0.5*R3, REF)",
+      "audio_stem": "Scene_09b_Forward_Elimination_And_BackSub",
+      "audio_start_sec": 17.1,
+      "audio_end_sec": 30.3,
+      "start_sec": 238.0,
+      "end_sec": 254.0,
+      "hold_frame_sec": 251.0,
+      "lead_in_sec": 0.6,
+      "tail_pad_sec": 0.8,
       "max_trim_sec": 2.0
     },
     {
-      "id": "Scene_09b",
-      "title": "Worked Example Part 2 (Steps 3, 4 & Back-Sub)",
+      "id": "Scene_09b_Step5",
+      "title": "Worked Example Step 5 (Back-Sub to RREF)",
       "audio_stem": "Scene_09b_Forward_Elimination_And_BackSub",
-      "start_sec": 214.0,
+      "audio_start_sec": 30.3,
+      "audio_end_sec": 42.05,
+      "start_sec": 254.0,
       "end_sec": 262.0,
       "hold_frame_sec": 260.0,
       "lead_in_sec": 0.5,
-      "tail_pad_sec": 0.5,
-      "max_trim_sec": 2.0
+      "tail_pad_sec": 0.6,
+      "max_trim_sec": 0.0
     },
     {
       "id": "Scene_10",
@@ -136,8 +179,8 @@
       "start_sec": 262.0,
       "end_sec": 270.0,
       "hold_frame_sec": 267.5,
-      "lead_in_sec": 0.3,
-      "tail_pad_sec": 0.4,
+      "lead_in_sec": 0.4,
+      "tail_pad_sec": 0.5,
       "max_trim_sec": 0.0
     },
     {
@@ -148,7 +191,7 @@
       "end_sec": 285.0,
       "hold_frame_sec": 283.0,
       "lead_in_sec": 0.4,
-      "tail_pad_sec": 0.4,
+      "tail_pad_sec": 0.5,
       "max_trim_sec": 0.0
     },
     {

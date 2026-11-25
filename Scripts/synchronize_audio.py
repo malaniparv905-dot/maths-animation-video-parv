@@ -52,13 +52,20 @@ def find_scene_audio(voiceover_dir: Path, stem: str) -> Optional[Path]:
     return None
 
 
-def detect_speech_bounds(audio_path: Path, total_dur: float, margin_sec: float = 0.15) -> Tuple[float, float]:
+def detect_speech_bounds(
+    audio_path: Path,
+    seg_start: float,
+    seg_end: float,
+    margin_sec: float = 0.15,
+) -> Tuple[float, float]:
     """
-    Detect leading and trailing silence via ffmpeg silencedetect and return
-    safe trim bounds [start, end] preserving `margin_sec` of natural breath.
+    Detect leading and trailing silence inside [seg_start, seg_end] via ffmpeg
+    silencedetect and return safe trim bounds preserving `margin_sec` of breath.
     """
+    seg_dur = max(0.1, seg_end - seg_start)
     res = run_cmd([
-        "ffmpeg", "-hide_banner", "-i", str(audio_path),
+        "ffmpeg", "-hide_banner", "-ss", f"{seg_start:.4f}", "-t", f"{seg_dur:.4f}",
+        "-i", str(audio_path),
         "-af", "silencedetect=noise=-42dB:d=0.25",
         "-f", "null", "-",
     ], check=False)
@@ -70,24 +77,31 @@ def detect_speech_bounds(audio_path: Path, total_dur: float, margin_sec: float =
     if starts and starts[0] < 0.15 and ends:
         trim_start = max(0.0, ends[0] - margin_sec)
 
-    trim_end = total_dur
-    if starts and (len(starts) > len(ends) or (ends and abs(ends[-1] - total_dur) < 0.25)):
+    trim_end = seg_dur
+    if starts and (len(starts) > len(ends) or (ends and abs(ends[-1] - seg_dur) < 0.25)):
         last_silence_start = starts[-1]
         if last_silence_start > trim_start + 0.5:
-            trim_end = min(total_dur, last_silence_start + margin_sec)
+            trim_end = min(seg_dur, last_silence_start + margin_sec)
 
     if trim_end - trim_start < 0.4:
-        return 0.0, total_dur
-    return trim_start, trim_end
+        return seg_start, seg_end
+    return seg_start + trim_start, seg_start + trim_end
 
 
-def process_voice_clip(src_audio: Path, dst_wav: Path) -> Dict[str, float]:
+def process_voice_clip(
+    src_audio: Path,
+    dst_wav: Path,
+    audio_start_sec: Optional[float] = None,
+    audio_end_sec: Optional[float] = None,
+) -> Dict[str, float]:
     """
-    Clean and normalize a raw voice recording while keeping vocal timbre
-    completely natural and authentic (no pitch shift, no time stretch).
+    Clean and normalize a raw voice recording (or sub-slice) while keeping
+    vocal timbre completely natural and authentic (no pitch/speed change).
     """
     raw_dur = get_duration(src_audio)
-    trim_start, trim_end = detect_speech_bounds(src_audio, raw_dur)
+    seg_start = float(audio_start_sec) if audio_start_sec is not None else 0.0
+    seg_end = min(raw_dur, float(audio_end_sec)) if audio_end_sec is not None else raw_dur
+    trim_start, trim_end = detect_speech_bounds(src_audio, seg_start, seg_end)
     trimmed_dur = max(0.1, trim_end - trim_start)
     fade_out_start = max(0.0, trimmed_dur - 0.03)
 
@@ -303,7 +317,12 @@ def synchronize_project(
             tail_pad = float(sc["tail_pad_sec"])
 
             clean_wav = work / f"{sc['id']}_clean.wav"
-            audio_stats = process_voice_clip(src_audio, clean_wav)
+            audio_stats = process_voice_clip(
+                src_audio,
+                clean_wav,
+                audio_start_sec=sc.get("audio_start_sec"),
+                audio_end_sec=sc.get("audio_end_sec"),
+            )
             needed_dur = lead_in + audio_stats["trimmed_duration_sec"] + tail_pad
 
             seg_mp4 = work / f"{sc['id']}.mp4"
