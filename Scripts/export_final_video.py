@@ -52,9 +52,10 @@ def verify_final_video(final_mp4: Path, target_specs: dict) -> bool:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Export and verify Video/Final_Video.mp4")
+    parser = argparse.ArgumentParser(description="Export and verify final MP4 video")
     parser.add_argument("--skip-sync", action="store_true", help="Use existing Synced_Silent_Timeline.mp4 & Synced_Master_Audio.wav")
     parser.add_argument("--trim-dead-space", action="store_true", help="Trim excess static hold during sync")
+    parser.add_argument("--output", default="Video/Final_Video.mp4", help="Output path relative to project root")
     args = parser.parse_args()
 
     scripts_dir = Path(__file__).resolve().parent
@@ -71,7 +72,7 @@ def main() -> int:
 
     synced_video = project_root / "Video" / "Synced_Silent_Timeline.mp4"
     master_wav = project_root / "Voiceover" / "Synced_Master_Audio.wav"
-    final_mp4 = project_root / "Video" / "Final_Video.mp4"
+    final_mp4 = project_root / args.output
 
     if not synced_video.exists() or not master_wav.exists():
         print("Error: Synced timeline files not found. Run without --skip-sync once recordings are ready.", file=sys.stderr)

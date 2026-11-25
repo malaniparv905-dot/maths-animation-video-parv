@@ -20,14 +20,81 @@
   },
   "scenes": [
     {
-      "id": "Scene_01",
-      "title": "Campus Cafe & Mess Puzzle",
+      "id": "Scene_01_1_Intro",
+      "title": "Cafe Terminal Intro",
       "audio_stem": "Scene_01_Cafe_Puzzle",
+      "audio_start_sec": 0.85,
+      "audio_end_sec": 7.45,
       "start_sec": 0.0,
+      "end_sec": 6.75,
+      "hold_frame_sec": 5.5,
+      "lead_in_sec": 0.35,
+      "tail_pad_sec": 0.30,
+      "max_trim_sec": 0.0
+    },
+    {
+      "id": "Scene_01_2_Order101",
+      "title": "Order #101 (Coffee + Tea = 5)",
+      "audio_stem": "Scene_01_Cafe_Puzzle",
+      "audio_start_sec": 7.90,
+      "audio_end_sec": 12.10,
+      "start_sec": 6.75,
+      "end_sec": 15.75,
+      "hold_frame_sec": 14.5,
+      "lead_in_sec": 0.45,
+      "tail_pad_sec": 0.45,
+      "max_trim_sec": 4.0
+    },
+    {
+      "id": "Scene_01_3_Order102",
+      "title": "Order #102 (Coffee + Sandwich = 8)",
+      "audio_stem": "Scene_01_Cafe_Puzzle",
+      "audio_start_sec": 12.60,
+      "audio_end_sec": 17.30,
+      "start_sec": 15.75,
+      "end_sec": 24.75,
+      "hold_frame_sec": 23.5,
+      "lead_in_sec": 0.45,
+      "tail_pad_sec": 0.45,
+      "max_trim_sec": 3.5
+    },
+    {
+      "id": "Scene_01_4_Order103",
+      "title": "Order #103 (Tea + Sandwich = 7)",
+      "audio_stem": "Scene_01_Cafe_Puzzle",
+      "audio_start_sec": 17.90,
+      "audio_end_sec": 22.55,
+      "start_sec": 24.75,
+      "end_sec": 32.0,
+      "hold_frame_sec": 30.5,
+      "lead_in_sec": 0.45,
+      "tail_pad_sec": 0.40,
+      "max_trim_sec": 2.0
+    },
+    {
+      "id": "Scene_01_5_Curiosity",
+      "title": "Building Curiosity Prompt",
+      "audio_stem": "Scene_01_Cafe_Puzzle",
+      "audio_start_sec": 22.85,
+      "audio_end_sec": 29.75,
+      "start_sec": 32.0,
+      "end_sec": 36.25,
+      "hold_frame_sec": 35.2,
+      "lead_in_sec": 0.35,
+      "tail_pad_sec": 0.35,
+      "max_trim_sec": 0.0
+    },
+    {
+      "id": "Scene_01_6_Variables",
+      "title": "Assigning Variables x, y, z",
+      "audio_stem": "Scene_01_Cafe_Puzzle",
+      "audio_start_sec": 30.20,
+      "audio_end_sec": 36.67,
+      "start_sec": 36.25,
       "end_sec": 40.0,
       "hold_frame_sec": 38.0,
-      "lead_in_sec": 0.8,
-      "tail_pad_sec": 0.5,
+      "lead_in_sec": 0.35,
+      "tail_pad_sec": 0.45,
       "max_trim_sec": 0.0
     },
     {
@@ -37,8 +104,8 @@
       "start_sec": 40.0,
       "end_sec": 58.0,
       "hold_frame_sec": 55.0,
-      "lead_in_sec": 0.4,
-      "tail_pad_sec": 0.5,
+      "lead_in_sec": 0.35,
+      "tail_pad_sec": 0.45,
       "max_trim_sec": 0.0
     },
     {
@@ -48,8 +115,8 @@
       "start_sec": 58.0,
       "end_sec": 70.0,
       "hold_frame_sec": 67.0,
-      "lead_in_sec": 0.4,
-      "tail_pad_sec": 0.4,
+      "lead_in_sec": 0.35,
+      "tail_pad_sec": 0.40,
       "max_trim_sec": 0.0
     },
     {
@@ -59,8 +126,8 @@
       "start_sec": 70.0,
       "end_sec": 80.0,
       "hold_frame_sec": 77.0,
-      "lead_in_sec": 0.4,
-      "tail_pad_sec": 0.4,
+      "lead_in_sec": 0.35,
+      "tail_pad_sec": 0.45,
       "max_trim_sec": 0.0
     },
     {
@@ -70,19 +137,20 @@
       "start_sec": 80.0,
       "end_sec": 120.0,
       "hold_frame_sec": 118.0,
-      "lead_in_sec": 0.5,
-      "tail_pad_sec": 0.5,
-      "max_trim_sec": 0.0
+      "lead_in_sec": 0.40,
+      "tail_pad_sec": 0.45,
+      "max_trim_sec": 1.0
     },
     {
       "id": "Scene_06",
       "title": "What Is Gaussian Elimination Actually?",
       "audio_stem": "Scene_06_Algorithm_Overview",
+      "audio_cut_ranges_sec": [[14.55, 15.42]],
       "start_sec": 120.0,
       "end_sec": 135.0,
       "hold_frame_sec": 132.0,
-      "lead_in_sec": 0.4,
-      "tail_pad_sec": 0.4,
+      "lead_in_sec": 0.35,
+      "tail_pad_sec": 0.45,
       "max_trim_sec": 0.0
     },
     {
@@ -92,19 +160,34 @@
       "start_sec": 135.0,
       "end_sec": 150.0,
       "hold_frame_sec": 147.0,
-      "lead_in_sec": 0.4,
-      "tail_pad_sec": 0.4,
-      "max_trim_sec": 0.0
+      "lead_in_sec": 0.35,
+      "tail_pad_sec": 0.40,
+      "max_trim_sec": 1.0
     },
     {
-      "id": "Scene_08",
-      "title": "The Three Elementary Row Operations",
+      "id": "Scene_08_1_Cards12",
+      "title": "Row Operations Cards 1 & 2",
       "audio_stem": "Scene_08_Row_Operations",
+      "audio_start_sec": 0.0,
+      "audio_end_sec": 10.6,
       "start_sec": 150.0,
+      "end_sec": 162.75,
+      "hold_frame_sec": 161.5,
+      "lead_in_sec": 0.40,
+      "tail_pad_sec": 0.40,
+      "max_trim_sec": 2.5
+    },
+    {
+      "id": "Scene_08_2_Card3",
+      "title": "Row Operation Card 3 & Theorem",
+      "audio_stem": "Scene_08_Row_Operations",
+      "audio_start_sec": 10.8,
+      "audio_end_sec": 19.58,
+      "start_sec": 162.75,
       "end_sec": 170.0,
       "hold_frame_sec": 168.0,
-      "lead_in_sec": 0.5,
-      "tail_pad_sec": 0.4,
+      "lead_in_sec": 0.35,
+      "tail_pad_sec": 0.45,
       "max_trim_sec": 0.0
     },
     {
@@ -116,9 +199,9 @@
       "start_sec": 170.0,
       "end_sec": 194.0,
       "hold_frame_sec": 190.0,
-      "lead_in_sec": 0.6,
-      "tail_pad_sec": 0.8,
-      "max_trim_sec": 6.0
+      "lead_in_sec": 0.40,
+      "tail_pad_sec": 0.65,
+      "max_trim_sec": 6.5
     },
     {
       "id": "Scene_09a_Step2",
@@ -129,9 +212,9 @@
       "start_sec": 194.0,
       "end_sec": 214.0,
       "hold_frame_sec": 211.0,
-      "lead_in_sec": 0.6,
-      "tail_pad_sec": 0.8,
-      "max_trim_sec": 4.0
+      "lead_in_sec": 0.40,
+      "tail_pad_sec": 0.65,
+      "max_trim_sec": 4.5
     },
     {
       "id": "Scene_09b_Step3",
@@ -142,9 +225,9 @@
       "start_sec": 214.0,
       "end_sec": 238.0,
       "hold_frame_sec": 234.0,
-      "lead_in_sec": 0.6,
-      "tail_pad_sec": 0.8,
-      "max_trim_sec": 6.0
+      "lead_in_sec": 0.40,
+      "tail_pad_sec": 0.65,
+      "max_trim_sec": 7.0
     },
     {
       "id": "Scene_09b_Step4",
@@ -155,8 +238,8 @@
       "start_sec": 238.0,
       "end_sec": 254.0,
       "hold_frame_sec": 251.0,
-      "lead_in_sec": 0.6,
-      "tail_pad_sec": 0.8,
+      "lead_in_sec": 0.40,
+      "tail_pad_sec": 0.75,
       "max_trim_sec": 2.0
     },
     {
@@ -168,8 +251,8 @@
       "start_sec": 254.0,
       "end_sec": 262.0,
       "hold_frame_sec": 260.0,
-      "lead_in_sec": 0.5,
-      "tail_pad_sec": 0.6,
+      "lead_in_sec": 0.40,
+      "tail_pad_sec": 0.65,
       "max_trim_sec": 0.0
     },
     {
@@ -179,8 +262,8 @@
       "start_sec": 262.0,
       "end_sec": 270.0,
       "hold_frame_sec": 267.5,
-      "lead_in_sec": 0.4,
-      "tail_pad_sec": 0.5,
+      "lead_in_sec": 0.35,
+      "tail_pad_sec": 0.50,
       "max_trim_sec": 0.0
     },
     {
@@ -190,8 +273,8 @@
       "start_sec": 270.0,
       "end_sec": 285.0,
       "hold_frame_sec": 283.0,
-      "lead_in_sec": 0.4,
-      "tail_pad_sec": 0.5,
+      "lead_in_sec": 0.35,
+      "tail_pad_sec": 0.50,
       "max_trim_sec": 0.0
     },
     {
@@ -201,8 +284,8 @@
       "start_sec": 285.0,
       "end_sec": 300.0,
       "hold_frame_sec": 297.0,
-      "lead_in_sec": 0.5,
-      "tail_pad_sec": 0.8,
+      "lead_in_sec": 0.40,
+      "tail_pad_sec": 1.20,
       "max_trim_sec": 0.0
     }
   ]
