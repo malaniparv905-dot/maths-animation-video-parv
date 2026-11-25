@@ -1,0 +1,166 @@
+{
+  "project": "M3_Gaussian_Elimination_Parv",
+  "student": {
+    "name": "Parv Malani",
+    "id": "E25B070827",
+    "batch": "Ramanujan",
+    "subject": "Mathematics 3 — Linear Algebra and Calculus"
+  },
+  "source_video": "Video/Silent_Animation.mp4",
+  "target_specs": {
+    "width": 1920,
+    "height": 1080,
+    "aspect_ratio": "16:9",
+    "fps": 24,
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "audio_sample_rate": 48000,
+    "audio_channels": 2,
+    "max_duration_sec": 420.0
+  },
+  "scenes": [
+    {
+      "id": "Scene_01",
+      "title": "Campus Cafe & Mess Puzzle",
+      "audio_stem": "Scene_01_Cafe_Puzzle",
+      "start_sec": 0.0,
+      "end_sec": 40.0,
+      "hold_frame_sec": 38.0,
+      "lead_in_sec": 0.8,
+      "tail_pad_sec": 0.5,
+      "max_trim_sec": 0.0
+    },
+    {
+      "id": "Scene_02",
+      "title": "Guessing & Trial-and-Error Fails",
+      "audio_stem": "Scene_02_Guessing_Fails",
+      "start_sec": 40.0,
+      "end_sec": 58.0,
+      "hold_frame_sec": 55.0,
+      "lead_in_sec": 0.5,
+      "tail_pad_sec": 0.5,
+      "max_trim_sec": 2.0
+    },
+    {
+      "id": "Scene_03",
+      "title": "Why Manual Elimination Fails",
+      "audio_stem": "Scene_03_Manual_Elimination_Limits",
+      "start_sec": 58.0,
+      "end_sec": 70.0,
+      "hold_frame_sec": 67.0,
+      "lead_in_sec": 0.4,
+      "tail_pad_sec": 0.4,
+      "max_trim_sec": 1.0
+    },
+    {
+      "id": "Scene_04",
+      "title": "The Intellectual Turning Point",
+      "audio_stem": "Scene_04_Turning_Point",
+      "start_sec": 70.0,
+      "end_sec": 80.0,
+      "hold_frame_sec": 77.0,
+      "lead_in_sec": 0.4,
+      "tail_pad_sec": 0.4,
+      "max_trim_sec": 0.5
+    },
+    {
+      "id": "Scene_05",
+      "title": "Understanding the 3D Geometry",
+      "audio_stem": "Scene_05_3D_Geometry_Intro",
+      "start_sec": 80.0,
+      "end_sec": 120.0,
+      "hold_frame_sec": 118.0,
+      "lead_in_sec": 0.5,
+      "tail_pad_sec": 0.5,
+      "max_trim_sec": 0.0
+    },
+    {
+      "id": "Scene_06",
+      "title": "What Is Gaussian Elimination Actually?",
+      "audio_stem": "Scene_06_Algorithm_Overview",
+      "start_sec": 120.0,
+      "end_sec": 135.0,
+      "hold_frame_sec": 132.0,
+      "lead_in_sec": 0.4,
+      "tail_pad_sec": 0.4,
+      "max_trim_sec": 1.0
+    },
+    {
+      "id": "Scene_07",
+      "title": "The Augmented Matrix & Pivots",
+      "audio_stem": "Scene_07_Matrix_And_Pivots",
+      "start_sec": 135.0,
+      "end_sec": 150.0,
+      "hold_frame_sec": 147.0,
+      "lead_in_sec": 0.4,
+      "tail_pad_sec": 0.4,
+      "max_trim_sec": 1.0
+    },
+    {
+      "id": "Scene_08",
+      "title": "The Three Elementary Row Operations",
+      "audio_stem": "Scene_08_Row_Operations",
+      "start_sec": 150.0,
+      "end_sec": 170.0,
+      "hold_frame_sec": 168.0,
+      "lead_in_sec": 0.5,
+      "tail_pad_sec": 0.4,
+      "max_trim_sec": 0.0
+    },
+    {
+      "id": "Scene_09a",
+      "title": "Worked Example Part 1 (Steps 1 & 2)",
+      "audio_stem": "Scene_09a_Forward_Elimination_Part1",
+      "start_sec": 170.0,
+      "end_sec": 214.0,
+      "hold_frame_sec": 212.0,
+      "lead_in_sec": 0.5,
+      "tail_pad_sec": 0.5,
+      "max_trim_sec": 2.0
+    },
+    {
+      "id": "Scene_09b",
+      "title": "Worked Example Part 2 (Steps 3, 4 & Back-Sub)",
+      "audio_stem": "Scene_09b_Forward_Elimination_And_BackSub",
+      "start_sec": 214.0,
+      "end_sec": 262.0,
+      "hold_frame_sec": 260.0,
+      "lead_in_sec": 0.5,
+      "tail_pad_sec": 0.5,
+      "max_trim_sec": 2.0
+    },
+    {
+      "id": "Scene_10",
+      "title": "Verification Against All Orders",
+      "audio_stem": "Scene_10_Verification",
+      "start_sec": 262.0,
+      "end_sec": 270.0,
+      "hold_frame_sec": 267.5,
+      "lead_in_sec": 0.3,
+      "tail_pad_sec": 0.4,
+      "max_trim_sec": 0.0
+    },
+    {
+      "id": "Scene_11",
+      "title": "Return to 3D Geometry (Invariance)",
+      "audio_stem": "Scene_11_Geometry_Invariance",
+      "start_sec": 270.0,
+      "end_sec": 285.0,
+      "hold_frame_sec": 283.0,
+      "lead_in_sec": 0.4,
+      "tail_pad_sec": 0.4,
+      "max_trim_sec": 0.0
+    },
+    {
+      "id": "Scene_12",
+      "title": "Conclusion",
+      "audio_stem": "Scene_12_Conclusion",
+      "start_sec": 285.0,
+      "end_sec": 300.0,
+      "hold_frame_sec": 297.0,
+      "lead_in_sec": 0.5,
+      "tail_pad_sec": 0.8,
+      "max_trim_sec": 0.0
+    }
+  ]
+}

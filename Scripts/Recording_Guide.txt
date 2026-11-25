@@ -1,0 +1,140 @@
+================================================================================
+PERSONAL VOICEOVER RECORDING GUIDE — PARV MALANI
+================================================================================
+Project  : M3 Mathematics Internal Assessment — Gaussian Elimination
+Video    : Silent_Animation.mp4 (05:00 / 300.0 seconds, 1920x1080 @ 24 fps)
+Format   : 13 separate scene audio files (adapted to the actual video structure)
+================================================================================
+
+1. ROOM & MICROPHONE SETUP
+--------------------------------------------------------------------------------
+- Room Choice       : Choose a quiet, small room with soft surfaces (curtains,
+                      bed, carpet, or cushions) to absorb echo.
+- Silence Electronics: Turn off fans, AC, fridge hum if possible, and put your
+                      phone on Do Not Disturb.
+- Mic Distance      : Keep your microphone (or phone/earphone mic) 15–20 cm
+                      (~6–8 inches) from your mouth, angled ~30 degrees off-axis
+                      so breath bursts ("p", "b", "t") don't pop or distort.
+- Recording Format  : Export/save as uncompressed WAV (48 kHz, 16-bit or 24-bit,
+                      mono or stereo). If your recorder saves .m4a or .mp3,
+                      keep the filename stem identical—the sync script accepts
+                      .wav (recommended) and can convert cleanly.
+
+2. AVOIDING CLIPPING & AWKWARD CUTS
+--------------------------------------------------------------------------------
+- Silent Padding    : Press Record, WAIT 1 full second in silence, speak the
+                      scene cleanly, then WAIT 1 full second in silence before
+                      stopping. Never speak immediately as you hit Record!
+- Input Gain        : Aim for normal speaking loudness so peaks never hit red
+                      (0 dB). Around -12 dB to -6 dB peak is ideal.
+- Single Take/Scene : If you stumble on a line, pause 1 second and re-record
+                      that short scene file from scratch—each file is only
+                      8 to 48 seconds long!
+
+3. SPEAKING PACE & DELIVERY STYLE
+--------------------------------------------------------------------------------
+- Natural Tone      : Imagine explaining this to a classmate sitting next to you—
+                      clear, confident, conversational, not reading like a robot.
+- Speaking Pace     : Aim for ~130–145 words per minute. Do NOT rush! If your
+                      take runs 2–4 seconds longer than the scene window, our
+                      synchronization script will automatically hold the clean
+                      settled frame instead of speeding up your voice.
+- Pauses            : Honor the [PAUSE] cues in Narration_Script.txt. Short
+                      pauses let viewers absorb numbers on screen.
+
+4. HOW TO PRONOUNCE MATHEMATICAL EXPRESSIONS NATURALLY
+--------------------------------------------------------------------------------
+- Variables         : Say "x", "y", "z" crisply (and "coffee x, tea y, sandwich z"
+                      where written).
+- Currency          : Say "five rupees", "eight rupees", "seven rupees" in Scene 01,
+                      and short forms ("three, two, five") once context is set.
+- Row Operations    : NEVER read symbols robotically ("R two arrow R two minus R
+                      one"). Read the written natural phrasing:
+                      * "Subtracting Row 1 from Row 2..."
+                      * "Multiplying Row 2 by minus one..."
+                      * "Dividing Row 3 by two..."
+- Negative Numbers  : Say "minus one", "minus three", and "seven minus negative
+                      three equals ten" cleanly with a tiny breath before "ten".
+- Coordinates       : Pause slightly between numbers: "three, [beat] two, [beat] five".
+
+5. EXACT FOLDER & FILENAME STRUCTURE (ADAPTED TO THE ACTUAL 13 VIDEO SEGMENTS)
+--------------------------------------------------------------------------------
+Note: Your prompt template showed 7 generic filenames (`Scene_00_Intro.wav` to
+`Scene_06_Summary.wav`), and explicitly noted to adapt the structure if the
+actual video differs. Because your animation has 12 distinct visual sections
+(with the 92-second worked matrix section split into two comfortable ~45s takes),
+save your recordings in:
+
+  M3_Gaussian_Elimination_Parv/Voiceover/
+  ├── Scene_01_Cafe_Puzzle.wav                      (00:00 – 00:40 | 40.0s)
+  ├── Scene_02_Guessing_Fails.wav                   (00:40 – 00:58 | 18.0s)
+  ├── Scene_03_Manual_Elimination_Limits.wav        (00:58 – 01:10 | 12.0s)
+  ├── Scene_04_Turning_Point.wav                    (01:10 – 01:20 | 10.0s)
+  ├── Scene_05_3D_Geometry_Intro.wav                (01:20 – 02:00 | 40.0s)
+  ├── Scene_06_Algorithm_Overview.wav               (02:00 – 02:15 | 15.0s)
+  ├── Scene_07_Matrix_And_Pivots.wav                (02:15 – 02:30 | 15.0s)
+  ├── Scene_08_Row_Operations.wav                   (02:30 – 02:50 | 20.0s)
+  ├── Scene_09a_Forward_Elimination_Part1.wav       (02:50 – 03:34 | 44.0s)
+  ├── Scene_09b_Forward_Elimination_And_BackSub.wav (03:34 – 04:22 | 48.0s)
+  ├── Scene_10_Verification.wav                     (04:22 – 04:30 |  8.0s)
+  ├── Scene_11_Geometry_Invariance.wav              (04:30 – 04:45 | 15.0s)
+  └── Scene_12_Conclusion.wav                       (04:45 – 05:00 | 15.0s)
+
+6. SCENE-BY-SCENE RECORDING CHECKLIST (WITH VISUAL WATCH-POINTS)
+--------------------------------------------------------------------------------
+Tip: Play `Video/Silent_Animation.mp4` muted in front of you while practicing!
+
+[ ] Scene_01_Cafe_Puzzle.wav (40s)
+    Watch the 3 order cards pop in at 6s, 15s, 24s, then variables at 36s.
+    Keep the ending line ("Let's call coffee x...") crisp so it finishes by 40s.
+
+[ ] Scene_02_Guessing_Fails.wav (18s)
+    Start as soon as the Trial 1 blue box appears. Pause slightly before
+    "Guessing fails..." to match the red error banner.
+
+[ ] Scene_03_Manual_Elimination_Limits.wav (12s)
+    Short, punchy contrast between left box (hand) and right box (thousands).
+
+[ ] Scene_04_Turning_Point.wav (10s)
+    Calm, thoughtful tone on the green quote box.
+
+[ ] Scene_05_3D_Geometry_Intro.wav (40s)
+    Describe axes first (0–5s), cyan plane (5–15s), purple plane line (15–24s),
+    amber plane + intersection dot (25–40s).
+
+[ ] Scene_06_Algorithm_Overview.wav (15s)
+    Emphasize "two clean stages": Forward Elimination vs. Back-Substitution.
+
+[ ] Scene_07_Matrix_And_Pivots.wav (15s)
+    Point verbally to the highlighted gold "1" (Pivot 1).
+
+[ ] Scene_08_Row_Operations.wav (20s)
+    Match the 3 cards: Swapping (0s), Scaling (7s), Combination (13s).
+
+[ ] Scene_09a_Forward_Elimination_Part1.wav (44s)
+    SLOWER PACE! Covers Step 1 (R2 <- R2 - R1) and Step 2 (R2 <- -1 * R2).
+    Leave a clean 1.5s pause between Step 1 and Step 2 (~03:14 in video).
+
+[ ] Scene_09b_Forward_Elimination_And_BackSub.wav (48s)
+    SLOWER PACE on Steps 3 & 4, brisk on Step 5!
+    Covers Step 3 (R3 <- R3 - R2), Step 4 (R3 <- 1/2 * R3 -> staircase),
+    and Step 5 (back-substitution to RREF).
+
+[ ] Scene_10_Verification.wav (8s)
+    Fastest/tightest slot (8s). Read clearly without rushing; if you take 9–10s,
+    our sync script will safely extend the verified card by 1–2s!
+
+[ ] Scene_11_Geometry_Invariance.wav (15s)
+    Connect the RREF solution directly to the three perpendicular 3D planes.
+
+[ ] Scene_12_Conclusion.wav (15s)
+    Warm, confident sign-off. Finish speaking by ~12–13s so the fade-out feels
+    natural.
+
+7. NEXT STEP AFTER RECORDING
+--------------------------------------------------------------------------------
+Once all 13 .wav files are placed in `M3_Gaussian_Elimination_Parv/Voiceover/`,
+simply send them / tell me they are ready, and I will inspect every recording,
+process the audio naturally, synchronize the timeline, verify with FFprobe,
+and export `Video/Final_Video.mp4`.
+================================================================================

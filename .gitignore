@@ -1,0 +1,13 @@
+# Do not commit private voice recordings or temporary intermediate timelines
+Voiceover/*.wav
+Voiceover/*.m4a
+Voiceover/*.mp3
+Voiceover/*.flac
+Voiceover/*.aac
+Original_Video_Backup/*.mp4
+Video/Synced_Silent_Timeline.mp4
+Video/Preview.mp4
+Scripts/sync_report.json
+__pycache__/
+*.pyc
+.DS_Store

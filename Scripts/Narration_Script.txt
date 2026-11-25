@@ -1,0 +1,303 @@
+================================================================================
+PERSONAL NARRATION SCRIPT — M3 MATHEMATICS INTERNAL ASSESSMENT
+================================================================================
+Student Name : Parv Malani
+Student ID   : E25B070827
+Batch        : Ramanujan
+Subject      : Mathematics 3 — Linear Algebra and Calculus
+Topic        : Gaussian Elimination — Solving a 3x3 System of Linear Equations
+Video Source : gaussian_elimination_cinematic_explainer (7).mp4 (05:00 / 300s)
+Target Pace  : ~135 words per minute (natural, clear, conversational student tone)
+--------------------------------------------------------------------------------
+NOTE ON TIMING & EMPHASIS CUES:
+- Words in *CAPS* or **bold-style markers** indicate natural vocal emphasis.
+- [PAUSE 0.5s] / [PAUSE 1.0s] indicate deliberate breathing pauses.
+- Record each scene as a SEPARATE .wav file in Voiceover/ using the exact name.
+================================================================================
+
+
+--------------------------------------------------------------------------------
+SCENE 01 | File: Voiceover/Scene_01_Cafe_Puzzle.wav
+Timestamps: 00:00 – 00:40 | Scene Duration: 40.0s | Est. Speech Duration: ~34s
+Pacing: Normal, engaging storytelling; align each sentence to card pop-ins.
+--------------------------------------------------------------------------------
+VISUAL DESCRIPTION:
+- 00:00–00:06: "CAMPUS CAFÉ & MESS" terminal & "Campus Cafeteria Pricing Mystery".
+- 00:06–00:15: Order #101 card appears (Coffee + Tea = Rs. 5).
+- 00:15–00:24: Order #102 card appears (Coffee + Sandwich = Rs. 8).
+- 00:24–00:32: Order #103 card appears (Tea + Sandwich = Rs. 7).
+- 00:32–00:36: Curiosity banner ("What if we want to know the individual price?").
+- 00:36–00:40: Variable cards appear: x = Coffee, y = Tea, z = Sandwich.
+
+NARRATION TEXT:
+[00:01] Imagine checking our campus café terminal and seeing three combo bills,
+        with *no* individual prices listed.
+[PAUSE 0.5s]
+[00:07] Order 101 has one coffee and one tea for *five* rupees.
+[PAUSE 1.0s]
+[00:16] Order 102 has coffee and a sandwich for *eight* rupees.
+[PAUSE 1.0s]
+[00:25] And Order 103 has tea and a sandwich for *seven* rupees.
+[PAUSE 0.5s]
+[00:32] We know each bundle total, so how do we find each item's *exact* price?
+[PAUSE 0.4s]
+[00:36] Let's call coffee x, tea y, and sandwich z—giving us three linear equations.
+
+EMPHASIS WORDS: no, five, eight, seven, exact, x, y, z.
+
+
+--------------------------------------------------------------------------------
+SCENE 02 | File: Voiceover/Scene_02_Guessing_Fails.wav
+Timestamps: 00:40 – 00:58 | Scene Duration: 18.0s | Est. Speech Duration: ~15.5s
+Pacing: Slightly brisk, conversational; pause briefly before "Guessing fails".
+--------------------------------------------------------------------------------
+VISUAL DESCRIPTION:
+- Trial 1 guess: Coffee (x) = Rs. 4 -> Tea (y) = Rs. 1 -> Sandwich (z) = Rs. 4.
+- Test Order 3: y + z = 1 + 4 = 5 != 7. Red "GUESS FAILED" banner at bottom.
+
+NARRATION TEXT:
+If we just guess—suppose coffee costs *four* rupees—Order 1 forces tea to be
+one rupee, and Order 2 makes the sandwich four rupees.
+[PAUSE 0.4s]
+Test Order 3: one plus four is *five*, not seven!
+[PAUSE 0.5s]
+Guessing fails because all three variables are interdependent.
+
+EMPHASIS WORDS: four, five, not seven, interdependent.
+
+
+--------------------------------------------------------------------------------
+SCENE 03 | File: Voiceover/Scene_03_Manual_Elimination_Limits.wav
+Timestamps: 00:58 – 01:10 | Scene Duration: 12.0s | Est. Speech Duration: ~10.5s
+Pacing: Steady, clear contrast between small vs. large systems.
+--------------------------------------------------------------------------------
+VISUAL DESCRIPTION:
+- Left box: Hand elimination works for 2–3 unknowns.
+- Right box: Combinatorial explosion, circular loops, thousands of unknowns in
+  robotics, GPS, circuits, and AI.
+
+NARRATION TEXT:
+Sure, high-school elimination works by hand for two or three variables.
+[PAUSE 0.4s]
+But with dozens—or thousands—of unknowns in robotics, GPS, or AI, ad-hoc steps
+quickly spiral into circular loops.
+
+EMPHASIS WORDS: hand, thousands, circular loops.
+
+
+--------------------------------------------------------------------------------
+SCENE 04 | File: Voiceover/Scene_04_Turning_Point.wav
+Timestamps: 01:10 – 01:20 | Scene Duration: 10.0s | Est. Speech Duration: ~8.5s
+Pacing: Thoughtful and slightly slower—sets up the turning point.
+--------------------------------------------------------------------------------
+VISUAL DESCRIPTION:
+- Green card: "The Need for an Algorithmic Method — We need a systematic way to
+  simplify these equations... without changing the answers they share."
+
+NARRATION TEXT:
+We need one systematic algorithm that simplifies equations *without* changing
+their shared answer.
+[PAUSE 0.5s]
+Before the algorithm, let's see what these equations look like in 3D.
+
+EMPHASIS WORDS: systematic, without, 3D.
+
+
+--------------------------------------------------------------------------------
+SCENE 05 | File: Voiceover/Scene_05_3D_Geometry_Intro.wav
+Timestamps: 01:20 – 02:00 | Scene Duration: 40.0s | Est. Speech Duration: ~34.5s
+Pacing: Slower and descriptive when the planes intersect.
+--------------------------------------------------------------------------------
+VISUAL DESCRIPTION:
+- 01:20–01:25: 3D axes X (Coffee), Y (Tea), Z (Sandwich).
+- 01:25–01:35: Cyan plane (x + y = 5) fades in.
+- 01:35–01:44: Purple plane (x + z = 8) intersects along a 1D line.
+- 01:44–02:00: Amber plane (y + z = 7) intersects at one point: (3, 2, 5).
+
+NARRATION TEXT:
+[01:20] Here are our three price axes: coffee x, tea y, and sandwich z.
+[PAUSE 0.5s]
+[01:25] Each equation defines a flat two-dimensional plane. Every point on this
+        cyan plane satisfies x plus y equals five.
+[PAUSE 0.7s]
+[01:35] Adding the second plane, x plus z equals eight, narrows our solution
+        down to the *one line* where they intersect.
+[PAUSE 0.7s]
+[01:45] Finally, the third plane—y plus z equals seven—cuts that line at *one*
+        unique common point: three, two, five.
+[PAUSE 0.4s]
+That means coffee is three, tea is two, and a sandwich is five rupees.
+
+EMPHASIS WORDS: flat, cyan, one line, one unique common point, three, two, five.
+
+
+--------------------------------------------------------------------------------
+SCENE 06 | File: Voiceover/Scene_06_Algorithm_Overview.wav
+Timestamps: 02:00 – 02:15 | Scene Duration: 15.0s | Est. Speech Duration: ~13.0s
+Pacing: Clear, structured overview.
+--------------------------------------------------------------------------------
+VISUAL DESCRIPTION:
+- "What Is Gaussian Elimination Actually?"
+- Stage 1: Forward Elimination (triangular staircase of zeros).
+- Stage 2: Back-Substitution (solve upwards from bottom).
+
+NARRATION TEXT:
+Gaussian elimination solves this in two clean stages.
+[PAUSE 0.4s]
+First, forward elimination builds an upper triangular staircase of zeros.
+[PAUSE 0.4s]
+Second, back-substitution solves upward from the bottom row like falling
+dominoes.
+
+EMPHASIS WORDS: two clean stages, forward elimination, staircase, back-substitution.
+
+
+--------------------------------------------------------------------------------
+SCENE 07 | File: Voiceover/Scene_07_Matrix_And_Pivots.wav
+Timestamps: 02:15 – 02:30 | Scene Duration: 15.0s | Est. Speech Duration: ~13.0s
+Pacing: Clear, steady explanation.
+--------------------------------------------------------------------------------
+VISUAL DESCRIPTION:
+- Left: Cluttered equations (1x + 1y + 0z = 5, etc.).
+- Right: Augmented Matrix with Pivot 1 (top-left "1") boxed in gold.
+
+NARRATION TEXT:
+To drop the repetitive letters, we pack the numbers into an augmented matrix.
+[PAUSE 0.5s]
+That highlighted one in the top-left corner is our *first pivot*—the anchor
+used to clear entries below it.
+
+EMPHASIS WORDS: augmented matrix, first pivot, anchor.
+
+
+--------------------------------------------------------------------------------
+SCENE 08 | File: Voiceover/Scene_08_Row_Operations.wav
+Timestamps: 02:30 – 02:50 | Scene Duration: 20.0s | Est. Speech Duration: ~17.0s
+Pacing: Match the 3 cards appearing at 2:30, 2:37, and 2:43.
+--------------------------------------------------------------------------------
+VISUAL DESCRIPTION:
+- 02:30: Card 1 — Row Swapping (Ri <-> Rj).
+- 02:37: Card 2 — Row Scaling (Ri <- k * Ri, k != 0).
+- 02:43: Card 3 — Row Combination (Rj <- Rj + c * Ri) + Fundamental Theorem.
+
+NARRATION TEXT:
+[02:31] We only ever use three legal row operations:
+        first, swapping any two rows;
+[PAUSE 0.6s]
+[02:37] second, scaling a row by any nonzero constant;
+[PAUSE 0.6s]
+[02:43] and third, adding a multiple of one row to another.
+        Because these preserve mathematical balance, the solution never changes.
+
+EMPHASIS WORDS: three, swapping, scaling, nonzero, adding, never changes.
+
+
+--------------------------------------------------------------------------------
+SCENE 09a | File: Voiceover/Scene_09a_Forward_Elimination_Part1.wav
+Timestamps: 02:50 – 03:34 | Scene Duration: 44.0s | Est. Speech Duration: ~34.0s
+Pacing: SLOWER NARRATION — give listeners time to follow the matrix arithmetic.
+--------------------------------------------------------------------------------
+VISUAL DESCRIPTION:
+- 02:50–03:14 (Step 1): Active Pivot 1 (1), Target to Zero (1 in Row 2, Col 1).
+  Operation: R2 <- R2 - R1 => [0, -1, 1 | 3].
+- 03:14–03:34 (Step 2): Active Pivot 2 (-1 in Row 2, Col 2).
+  Operation: R2 <- (-1) * R2 => [0, 1, -1 | -3].
+
+NARRATION TEXT:
+[02:51] Now let's transform our matrix step by step.
+[PAUSE 0.5s]
+[02:54] In Step 1, using Pivot 1, we want a zero directly below it in Row 2.
+        Subtracting Row 1 from Row 2 turns one, zero, one, eight into zero,
+        minus one, one, three.
+[PAUSE 1.5s]
+[03:14] In Step 2, Row 2 starts with minus one.
+[PAUSE 0.4s]
+        Multiplying Row 2 by minus one flips every sign to zero, one, minus one,
+        minus three—giving us a clean positive pivot in Column 2.
+
+EMPHASIS WORDS: Step 1, zero, Subtracting Row 1 from Row 2, Step 2, minus one,
+                positive pivot.
+
+
+--------------------------------------------------------------------------------
+SCENE 09b | File: Voiceover/Scene_09b_Forward_Elimination_And_BackSub.wav
+Timestamps: 03:34 – 04:22 | Scene Duration: 48.0s | Est. Speech Duration: ~39.0s
+Pacing: SLOWER NARRATION for Step 3 & Step 4; crisp & steady for Step 5.
+--------------------------------------------------------------------------------
+VISUAL DESCRIPTION:
+- 03:34–03:58 (Step 3): Target to Zero in Row 3, Col 2.
+  Operation: R3 <- R3 - R2 => [0, 0, 2 | 10].
+- 03:58–04:14 (Step 4): Scale Row 3 via R3 <- (1/2) * R3 => [0, 0, 1 | 5].
+  Green staircase line appears (Row Echelon Form achieved, z = 5).
+- 04:14–04:22 (Step 5): Back-substitution to RREF: R2 <- R2 + R3 & R1 <- R1 - R2
+  => [1 0 0 | 3], [0 1 0 | 2], [0 0 1 | 5].
+
+NARRATION TEXT:
+[03:35] In Step 3, we eliminate the entry below our second pivot.
+[PAUSE 0.4s]
+        Subtracting Row 2 from Row 3 turns zero, one, one, seven into zero,
+        zero, two, ten—because seven minus negative three equals ten.
+[PAUSE 1.5s]
+[03:58] In Step 4, dividing Row 3 by two gives zero, zero, one, five.
+[PAUSE 0.4s]
+        Our Row Echelon staircase is complete, immediately revealing that
+        sandwich z equals *five*.
+[PAUSE 1.0s]
+[04:14] In Step 5, back-substitution clears upward: updating Row 2 gives tea y
+        equals two, and Row 1 gives coffee x equals three.
+
+EMPHASIS WORDS: Step 3, seven minus negative three, Step 4, staircase, five,
+                Step 5, two, three.
+
+
+--------------------------------------------------------------------------------
+SCENE 10 | File: Voiceover/Scene_10_Verification.wav
+Timestamps: 04:22 – 04:30 | Scene Duration: 8.0s | Est. Speech Duration: ~7.0s
+Pacing: Confident and crisp (8-second window).
+--------------------------------------------------------------------------------
+VISUAL DESCRIPTION:
+- Verification screen: Coffee = Rs. 3, Tea = Rs. 2, Sandwich = Rs. 5.
+- Order 1: 3 + 2 = 5 (Verified); Order 2: 3 + 5 = 8 (Verified); Order 3: 2 + 5 = 7.
+
+NARRATION TEXT:
+Let's verify all three bills: three plus two is five, three plus five is eight,
+and two plus five is seven. Every order checks out!
+
+EMPHASIS WORDS: verify, five, eight, seven, checks out.
+
+
+--------------------------------------------------------------------------------
+SCENE 11 | File: Voiceover/Scene_11_Geometry_Invariance.wav
+Timestamps: 04:30 – 04:45 | Scene Duration: 15.0s | Est. Speech Duration: ~13.0s
+Pacing: Smooth, reflective connection back to 3D geometry.
+--------------------------------------------------------------------------------
+VISUAL DESCRIPTION:
+- "The Equations Changed. The Solution Did Not."
+- Three axis-aligned perpendicular planes: x = 3, y = 2, z = 5 intersecting at
+  the exact same point (3, 2, 5).
+
+NARRATION TEXT:
+Back in 3D, row operations turned those tilted planes into three simple
+perpendicular planes—x equals three, y equals two, and z equals five—meeting at
+the exact same intersection point.
+
+EMPHASIS WORDS: tilted, perpendicular, exact same intersection point.
+
+
+--------------------------------------------------------------------------------
+SCENE 12 | File: Voiceover/Scene_12_Conclusion.wav
+Timestamps: 04:45 – 05:00 | Scene Duration: 15.0s | Est. Speech Duration: ~12.5s
+Pacing: Confident, warm conclusion; finish before 04:59 fade-out.
+--------------------------------------------------------------------------------
+VISUAL DESCRIPTION:
+- Glowing blue staircase with binary matrix background.
+- Card: "GAUSSIAN ELIMINATION — Complex systems. Simplified step by step.
+  One solution preserved. Coffee = Rs. 3 • Tea = Rs. 2 • Sandwich = Rs. 5".
+
+NARRATION TEXT:
+That is Gaussian elimination: complex systems simplified step by step, with the
+exact solution—coffee three, tea two, and sandwich five—preserved from start to
+finish. Thank you.
+
+EMPHASIS WORDS: Gaussian elimination, step by step, preserved, Thank you.
+================================================================================
