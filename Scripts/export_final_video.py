@@ -81,10 +81,11 @@ def main() -> int:
     print("Encoding high-quality Final_Video.mp4 (1920x1080 H.264 + AAC 192 kbps)...")
     run_cmd([
         "ffmpeg", "-y", "-i", str(synced_video), "-i", str(master_wav),
+        "-vf", "setsar=1,setdar=16/9",
         "-c:v", "libx264", "-crf", "18", "-preset", "slow",
-        "-pix_fmt", "yuv420p", "-profile:v", "high",
+        "-pix_fmt", "yuv420p", "-profile:v", "high", "-aspect", "16:9",
         "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2",
-        "-movflags", "+faststart", "-shortest", str(final_mp4),
+        "-movflags", "+faststart", str(final_mp4),
     ])
 
     ok = verify_final_video(final_mp4, manifest["target_specs"])

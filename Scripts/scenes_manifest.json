@@ -7,6 +7,11 @@
     "subject": "Mathematics 3 — Linear Algebra and Calculus"
   },
   "source_video": "Video/Silent_Animation.mp4",
+  "intro_title_card": {
+    "image": "Scripts/intro_title_card.png",
+    "duration_sec": 2.0
+  },
+  "exact_total_duration_sec": 300.0,
   "target_specs": {
     "width": 1920,
     "height": 1080,
@@ -73,15 +78,15 @@
     },
     {
       "id": "Scene_01_5_Curiosity",
-      "title": "Building Curiosity Prompt",
+      "title": "Building Curiosity Prompt (Thinking Pause)",
       "audio_stem": "Scene_01_Cafe_Puzzle",
       "audio_start_sec": 22.85,
       "audio_end_sec": 29.75,
       "start_sec": 32.0,
       "end_sec": 36.25,
-      "hold_frame_sec": 35.2,
+      "hold_frame_sec": 35.0,
       "lead_in_sec": 0.35,
-      "tail_pad_sec": 0.35,
+      "tail_pad_sec": 1.60,
       "max_trim_sec": 0.0
     },
     {
@@ -94,7 +99,7 @@
       "end_sec": 40.0,
       "hold_frame_sec": 38.0,
       "lead_in_sec": 0.35,
-      "tail_pad_sec": 0.45,
+      "tail_pad_sec": 0.85,
       "max_trim_sec": 0.0
     },
     {
@@ -105,7 +110,7 @@
       "end_sec": 58.0,
       "hold_frame_sec": 55.0,
       "lead_in_sec": 0.35,
-      "tail_pad_sec": 0.45,
+      "tail_pad_sec": 1.00,
       "max_trim_sec": 0.0
     },
     {
@@ -116,7 +121,7 @@
       "end_sec": 70.0,
       "hold_frame_sec": 67.0,
       "lead_in_sec": 0.35,
-      "tail_pad_sec": 0.40,
+      "tail_pad_sec": 0.45,
       "max_trim_sec": 0.0
     },
     {
@@ -127,7 +132,7 @@
       "end_sec": 80.0,
       "hold_frame_sec": 77.0,
       "lead_in_sec": 0.35,
-      "tail_pad_sec": 0.45,
+      "tail_pad_sec": 1.00,
       "max_trim_sec": 0.0
     },
     {
@@ -137,9 +142,9 @@
       "start_sec": 80.0,
       "end_sec": 120.0,
       "hold_frame_sec": 118.0,
-      "lead_in_sec": 0.40,
-      "tail_pad_sec": 0.45,
-      "max_trim_sec": 1.0
+      "lead_in_sec": 0.45,
+      "tail_pad_sec": 0.80,
+      "max_trim_sec": 0.0
     },
     {
       "id": "Scene_06",
@@ -150,7 +155,7 @@
       "end_sec": 135.0,
       "hold_frame_sec": 132.0,
       "lead_in_sec": 0.35,
-      "tail_pad_sec": 0.45,
+      "tail_pad_sec": 0.50,
       "max_trim_sec": 0.0
     },
     {
@@ -160,9 +165,9 @@
       "start_sec": 135.0,
       "end_sec": 150.0,
       "hold_frame_sec": 147.0,
-      "lead_in_sec": 0.35,
-      "tail_pad_sec": 0.40,
-      "max_trim_sec": 1.0
+      "lead_in_sec": 0.40,
+      "tail_pad_sec": 0.60,
+      "max_trim_sec": 0.0
     },
     {
       "id": "Scene_08_1_Cards12",
@@ -187,7 +192,7 @@
       "end_sec": 170.0,
       "hold_frame_sec": 168.0,
       "lead_in_sec": 0.35,
-      "tail_pad_sec": 0.45,
+      "tail_pad_sec": 0.50,
       "max_trim_sec": 0.0
     },
     {
@@ -200,8 +205,8 @@
       "end_sec": 194.0,
       "hold_frame_sec": 190.0,
       "lead_in_sec": 0.40,
-      "tail_pad_sec": 0.65,
-      "max_trim_sec": 6.5
+      "tail_pad_sec": 0.80,
+      "max_trim_sec": 4.5
     },
     {
       "id": "Scene_09a_Step2",
@@ -213,8 +218,8 @@
       "end_sec": 214.0,
       "hold_frame_sec": 211.0,
       "lead_in_sec": 0.40,
-      "tail_pad_sec": 0.65,
-      "max_trim_sec": 4.5
+      "tail_pad_sec": 0.80,
+      "max_trim_sec": 4.0
     },
     {
       "id": "Scene_09b_Step3",
@@ -226,8 +231,8 @@
       "end_sec": 238.0,
       "hold_frame_sec": 234.0,
       "lead_in_sec": 0.40,
-      "tail_pad_sec": 0.65,
-      "max_trim_sec": 7.0
+      "tail_pad_sec": 0.80,
+      "max_trim_sec": 5.0
     },
     {
       "id": "Scene_09b_Step4",
@@ -239,8 +244,8 @@
       "end_sec": 254.0,
       "hold_frame_sec": 251.0,
       "lead_in_sec": 0.40,
-      "tail_pad_sec": 0.75,
-      "max_trim_sec": 2.0
+      "tail_pad_sec": 0.90,
+      "max_trim_sec": 0.5
     },
     {
       "id": "Scene_09b_Step5",
@@ -252,7 +257,7 @@
       "end_sec": 262.0,
       "hold_frame_sec": 260.0,
       "lead_in_sec": 0.40,
-      "tail_pad_sec": 0.65,
+      "tail_pad_sec": 0.70,
       "max_trim_sec": 0.0
     },
     {
@@ -263,7 +268,7 @@
       "end_sec": 270.0,
       "hold_frame_sec": 267.5,
       "lead_in_sec": 0.35,
-      "tail_pad_sec": 0.50,
+      "tail_pad_sec": 0.90,
       "max_trim_sec": 0.0
     },
     {
@@ -274,7 +279,7 @@
       "end_sec": 285.0,
       "hold_frame_sec": 283.0,
       "lead_in_sec": 0.35,
-      "tail_pad_sec": 0.50,
+      "tail_pad_sec": 0.60,
       "max_trim_sec": 0.0
     },
     {

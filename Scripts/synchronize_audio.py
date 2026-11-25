@@ -2,15 +2,16 @@
 """
 Scene-Based Voiceover Synchronization & Natural Audio Processing Pipeline.
 
-Reads `Scripts/scenes_manifest.json`, inspects every user-recorded scene audio
-file in `Voiceover/`, applies gentle, natural audio engineering (no voice
-alteration or speed-up), adjusts visual scene timing via unified-colorspace
-`tpad=stop_mode=clone` holds (or static tail trims), and outputs a continuous
-synchronized master audio + preview MP4 ready for final export.
+Reads `Scripts/scenes_manifest.json`, optionally prepends a 2-second opening
+title card, processes every user-recorded scene clip naturally (no pitch or
+speed change), locks every segment to exact integer frame counts at 24 fps
+(48,000 Hz audio sample-locked), and supports exact total runtime targeting
+(e.g. exactly 300.000s / 7,200 frames) with zero audio/video drift.
 """
 
 import argparse
 import json
+import math
 import re
 import subprocess
 import tempfile
@@ -39,6 +40,15 @@ def get_duration(path: Path) -> float:
     """Return media duration in seconds using ffprobe."""
     info = ffprobe_info(path)
     return float(info["format"]["duration"])
+
+
+def get_frame_count(path: Path) -> int:
+    """Return exact video frame count from stream metadata or nb_read_frames."""
+    info = ffprobe_info(path)
+    v = [s for s in info["streams"] if s.get("codec_type") == "video"][0]
+    if "nb_frames" in v:
+        return int(v["nb_frames"])
+    return int(round(float(info["format"]["duration"]) * 24))
 
 
 def find_scene_audio(voiceover_dir: Path, stem: str) -> Optional[Path]:
@@ -101,7 +111,6 @@ def apply_internal_cuts(
     if not cut_ranges:
         return src_audio, seg_start, seg_end
 
-    # Collect kept intervals within [seg_start, seg_end]
     kept: List[Tuple[float, float]] = []
     cursor = seg_start
     for c_start, c_end in sorted(cut_ranges):
@@ -166,12 +175,6 @@ def process_voice_clip(
     trimmed_dur = max(0.1, trim_end - trim_start)
     fade_out_start = max(0.0, trimmed_dur - 0.045)
 
-    # Natural, cohesive student-voice processing chain:
-    # - 80 Hz high-pass removes room/handling rumble without thinning voice
-    # - Gentle 2.8 kHz presence (+1.0 dB) improves consonant/math clarity
-    # - Light FFT denoise (-26 dB) preserves room naturalness
-    # - Transparent 2.0:1 compressor + EBU R128 loudnorm (-16 LUFS, LRA=7)
-    # - Smooth 45ms fade-in/out avoids abrupt boundary cuts
     af_chain = (
         "highpass=f=80,"
         "equalizer=f=2800:t=q:w=1.5:g=1.0,"
@@ -197,96 +200,140 @@ def process_voice_clip(
     }
 
 
-def pad_audio_to_slot(
-    clip_wav: Path,
+def pad_audio_to_frames(
+    clip_wav: Optional[Path],
     dst_wav: Path,
     lead_in_sec: float,
-    target_slot_dur: float,
+    n_frames: int,
+    fps: int,
 ) -> None:
-    """Place `clip_wav` at `lead_in_sec` inside a `target_slot_dur` stereo WAV."""
+    """
+    Create an exact sample-locked stereo 48 kHz WAV of `n_frames / fps` seconds
+    (2000 samples per video frame at 24 fps / 48 kHz) so A/V never drifts.
+    """
+    samples_per_frame = 48000 // fps
+    total_samples = n_frames * samples_per_frame
+    if clip_wav is None:
+        run_cmd([
+            "ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo",
+            "-af", f"atrim=end_sample={total_samples}",
+            "-ar", "48000", "-ac", "2", "-c:a", "pcm_s16le",
+            str(dst_wav),
+        ])
+        return
+
     delay_ms = int(round(lead_in_sec * 1000))
     run_cmd([
         "ffmpeg", "-y", "-i", str(clip_wav),
-        "-af", f"adelay={delay_ms}|{delay_ms},apad,atrim=0:{target_slot_dur:.4f}",
+        "-af", f"adelay={delay_ms}|{delay_ms},apad,atrim=end_sample={total_samples}",
         "-ar", "48000", "-ac", "2", "-c:a", "pcm_s16le",
         str(dst_wav),
     ])
 
 
-def build_scene_video_segment(
-    silent_video: Path,
-    scene: Dict,
-    target_dur: float,
+def build_intro_title_segment(
+    intro_cfg: Dict,
+    project_root: Path,
     fps: int,
     dst_mp4: Path,
-    allow_trim_dead_space: bool = False,
-) -> Tuple[float, str]:
-    """
-    Create the video segment for a single scene in a unified colorspace
-    (`yuv420p`) so static holds have zero brightness/contrast flashes.
-    """
+) -> int:
+    """Render the opening title card clip with clean fade-in/out and exact frames."""
+    img_path = project_root / intro_cfg["image"]
+    dur_sec = float(intro_cfg["duration_sec"])
+    n_frames = int(round(dur_sec * fps))
+    fade_out_st = max(0.1, (n_frames / fps) - 0.25)
+
+    run_cmd([
+        "ffmpeg", "-y", "-loop", "1", "-i", str(img_path),
+        "-vf", f"fps={fps},format=yuv420p,setsar=1,setdar=16/9,fade=t=in:st=0:d=0.25,fade=t=out:st={fade_out_st:.4f}:d=0.25",
+        "-frames:v", str(n_frames),
+        "-c:v", "libx264", "-crf", "16", "-preset", "medium",
+        "-pix_fmt", "yuv420p", "-r", str(fps), "-an", str(dst_mp4),
+    ])
+    return get_frame_count(dst_mp4)
+
+
+def compute_scene_target_frames(
+    scene: Dict,
+    needed_dur: float,
+    fps: int,
+    allow_trim_dead_space: bool,
+) -> Tuple[int, str]:
+    """Determine exact integer target frame count for a scene before rendering."""
     start = float(scene["start_sec"])
     end = float(scene["end_sec"])
     orig_dur = end - start
-    hold_t = float(scene["hold_frame_sec"])
+    orig_frames = int(round(orig_dur * fps))
+    needed_frames = int(math.ceil(needed_dur * fps))
     max_trim = float(scene.get("max_trim_sec", 0.0))
 
-    # Case 1: Narration fits inside original scene (or trims excess static hold)
-    if target_dur <= orig_dur + 0.05:
-        excess = orig_dur - target_dur
-        if allow_trim_dead_space and excess > 0.6 and max_trim > 0.0:
-            trim_amt = min(excess - 0.15, max_trim)
-            if trim_amt > 0.25:
-                # Trim static hold around hold_t while preserving pre-hold animation & tail fade
-                cut_start = max(start + 0.5, hold_t - trim_amt)
-                cut_end = min(end - 0.25, cut_start + trim_amt)
-                if cut_end - cut_start > 0.2 and (end - cut_end) > 0.1:
-                    fc = (
-                        f"[0:v]trim=start={start:.4f}:end={cut_start:.4f},setpts=PTS-STARTPTS,format=yuv420p[v0];"
-                        f"[0:v]trim=start={cut_end:.4f}:end={end:.4f},setpts=PTS-STARTPTS,format=yuv420p[v1];"
-                        "[v0][v1]concat=n=2:v=1:a=0[vout]"
-                    )
-                    run_cmd([
-                        "ffmpeg", "-y", "-i", str(silent_video),
-                        "-filter_complex", fc, "-map", "[vout]",
-                        "-c:v", "libx264", "-crf", "16", "-preset", "medium",
-                        "-pix_fmt", "yuv420p", "-r", str(fps), "-an", str(dst_mp4),
-                    ])
-                    actual = get_duration(dst_mp4)
-                    return actual, f"trimmed_static_hold (-{cut_end - cut_start:.2f}s at t={cut_start:.1f}s)"
+    if needed_frames <= orig_frames:
+        excess_sec = (orig_frames - needed_frames) / fps
+        if allow_trim_dead_space and excess_sec > 0.6 and max_trim > 0.0:
+            trim_sec = min(excess_sec - 0.15, max_trim)
+            trim_frames = int(round(trim_sec * fps))
+            if trim_frames >= 6 and (orig_frames - trim_frames) >= needed_frames:
+                return orig_frames - trim_frames, f"trimmed_static_hold (-{trim_frames / fps:.2f}s)"
+        return orig_frames, "original_timing"
 
-        run_cmd([
-            "ffmpeg", "-y", "-i", str(silent_video),
-            "-vf", f"trim=start={start:.4f}:end={end:.4f},setpts=PTS-STARTPTS,format=yuv420p",
-            "-c:v", "libx264", "-crf", "16", "-preset", "medium",
-            "-pix_fmt", "yuv420p", "-r", str(fps), "-an", str(dst_mp4),
-        ])
-        actual = get_duration(dst_mp4)
-        return actual, "original_timing"
+    hold_frames = needed_frames - orig_frames
+    return needed_frames, f"extended_hold (+{hold_frames / fps:.2f}s at t={scene['hold_frame_sec']}s)"
 
-    # Case 2: Narration is longer -> clone hold frame directly inside same filtergraph (tpad)
-    hold_dur = target_dur - orig_dur
-    if end - hold_t > 0.08:
-        fc = (
-            f"[0:v]trim=start={start:.4f}:end={hold_t:.4f},setpts=PTS-STARTPTS,"
-            f"format=yuv420p,tpad=stop_duration={hold_dur:.4f}:stop_mode=clone[v0];"
-            f"[0:v]trim=start={hold_t:.4f}:end={end:.4f},setpts=PTS-STARTPTS,format=yuv420p[v1];"
-            "[v0][v1]concat=n=2:v=1:a=0[vout]"
-        )
-    else:
+
+def render_scene_video_to_frames(
+    silent_video: Path,
+    scene: Dict,
+    target_frames: int,
+    fps: int,
+    dst_mp4: Path,
+) -> int:
+    """
+    Render a scene clip to an EXACT integer frame count `target_frames` inside
+    a single unified `yuv420p` filtergraph (zero brightness flashes).
+    """
+    start = float(scene["start_sec"])
+    end = float(scene["end_sec"])
+    orig_frames = int(round((end - start) * fps))
+    hold_t = float(scene["hold_frame_sec"])
+
+    if target_frames == orig_frames:
         fc = (
             f"[0:v]trim=start={start:.4f}:end={end:.4f},setpts=PTS-STARTPTS,"
-            f"format=yuv420p,tpad=stop_duration={hold_dur:.4f}:stop_mode=clone[vout]"
+            f"format=yuv420p,fps={fps}[vout]"
         )
+    elif target_frames < orig_frames:
+        trim_sec = (orig_frames - target_frames) / fps
+        cut_start = max(start + 0.4, hold_t - trim_sec)
+        cut_end = min(end - 0.2, cut_start + trim_sec)
+        fc = (
+            f"[0:v]trim=start={start:.4f}:end={cut_start:.4f},setpts=PTS-STARTPTS,format=yuv420p[v0];"
+            f"[0:v]trim=start={cut_end:.4f}:end={end:.4f},setpts=PTS-STARTPTS,format=yuv420p[v1];"
+            f"[v0][v1]concat=n=2:v=1:a=0,fps={fps}[vout]"
+        )
+    else:
+        hold_frames = target_frames - orig_frames
+        hold_dur = (hold_frames + 1) / fps  # slight pad, exact cut via -frames:v
+        if end - hold_t > 0.08:
+            fc = (
+                f"[0:v]trim=start={start:.4f}:end={hold_t:.4f},setpts=PTS-STARTPTS,"
+                f"format=yuv420p,tpad=stop_duration={hold_dur:.4f}:stop_mode=clone[v0];"
+                f"[0:v]trim=start={hold_t:.4f}:end={end:.4f},setpts=PTS-STARTPTS,format=yuv420p[v1];"
+                f"[v0][v1]concat=n=2:v=1:a=0,fps={fps}[vout]"
+            )
+        else:
+            fc = (
+                f"[0:v]trim=start={start:.4f}:end={end:.4f},setpts=PTS-STARTPTS,"
+                f"format=yuv420p,tpad=stop_duration={hold_dur:.4f}:stop_mode=clone,fps={fps}[vout]"
+            )
 
     run_cmd([
         "ffmpeg", "-y", "-i", str(silent_video),
         "-filter_complex", fc, "-map", "[vout]",
+        "-frames:v", str(target_frames),
         "-c:v", "libx264", "-crf", "16", "-preset", "medium",
         "-pix_fmt", "yuv420p", "-r", str(fps), "-an", str(dst_mp4),
     ])
-    actual = get_duration(dst_mp4)
-    return actual, f"extended_hold (+{hold_dur:.2f}s at t={hold_t:.1f}s)"
+    return get_frame_count(dst_mp4)
 
 
 def check_readiness(project_root: Path, manifest: Dict) -> int:
@@ -328,13 +375,14 @@ def synchronize_project(
     trim_dead_space: bool = False,
     create_preview: bool = True,
 ) -> Dict:
-    """Run full audio processing, timeline sync, and preview assembly."""
+    """Run full audio processing, frame-locked timeline sync, and preview assembly."""
     silent_video = project_root / manifest["source_video"]
     voiceover_dir = project_root / "Voiceover"
     video_dir = project_root / "Video"
     scripts_dir = project_root / "Scripts"
     fps = int(manifest["target_specs"]["fps"])
     max_dur = float(manifest["target_specs"]["max_duration_sec"])
+    exact_total = manifest.get("exact_total_duration_sec")
 
     missing = sorted({
         sc["audio_stem"]
@@ -351,12 +399,36 @@ def synchronize_project(
         work = Path(tmp)
         video_parts: List[Path] = []
         audio_parts: List[Path] = []
-        running_time = 0.0
+        running_frames = 0
 
+        # Optional 2s opening title card
+        intro_cfg = manifest.get("intro_title_card")
+        if intro_cfg:
+            intro_mp4 = work / "00_intro_card.mp4"
+            intro_wav = work / "00_intro_card.wav"
+            intro_frames = build_intro_title_segment(intro_cfg, project_root, fps, intro_mp4)
+            pad_audio_to_frames(None, intro_wav, 0.0, intro_frames, fps)
+            video_parts.append(intro_mp4)
+            audio_parts.append(intro_wav)
+            report_scenes.append({
+                "id": "Intro_Title_Card",
+                "title": "Topic: Gaussian Elimination / Made by Parv Malani",
+                "source_audio": None,
+                "original_slot_sec": 0.0,
+                "final_slot_sec": round(intro_frames / fps, 3),
+                "timeline_start_sec": 0.0,
+                "timeline_end_sec": round(intro_frames / fps, 3),
+                "speech_start_sec": None,
+                "speech_end_sec": None,
+                "timing_action": f"prepended_title_card ({intro_frames} frames)",
+            })
+            running_frames += intro_frames
+
+        # Stage 1: Process all scene audio and plan exact frame counts
+        planned = []
         for sc in manifest["scenes"]:
             src_audio = find_scene_audio(voiceover_dir, sc["audio_stem"])
             assert src_audio is not None
-            orig_dur = float(sc["end_sec"]) - float(sc["start_sec"])
             lead_in = float(sc["lead_in_sec"])
             tail_pad = float(sc["tail_pad_sec"])
 
@@ -371,37 +443,87 @@ def synchronize_project(
                 cut_ranges=sc.get("audio_cut_ranges_sec"),
             )
             needed_dur = lead_in + audio_stats["trimmed_duration_sec"] + tail_pad
+            target_frames, action = compute_scene_target_frames(
+                sc, needed_dur, fps, allow_trim_dead_space=trim_dead_space
+            )
+            planned.append({
+                "sc": sc,
+                "src_audio": src_audio,
+                "clean_wav": clean_wav,
+                "audio_stats": audio_stats,
+                "needed_frames": int(math.ceil((lead_in + audio_stats["trimmed_duration_sec"] + 0.35) * fps)),
+                "target_frames": target_frames,
+                "action": action,
+            })
 
+        # Stage 2: Balance frame count to exact_total_duration_sec if requested
+        if exact_total is not None:
+            goal_frames = int(round(float(exact_total) * fps))
+            current_total_frames = running_frames + sum(p["target_frames"] for p in planned)
+            delta = goal_frames - current_total_frames
+            if delta > 0:
+                # Distribute extra gentle breathing frames across key pause scenes + conclusion
+                targets = ["Scene_01_5_Curiosity", "Scene_05", "Scene_09b_Step4", "Scene_10", "Scene_12"]
+                idx = 0
+                while delta > 0:
+                    tid = targets[idx % len(targets)]
+                    for p in planned:
+                        if p["sc"]["id"] == tid and delta > 0:
+                            p["target_frames"] += 1
+                            p["action"] += " (+1f exact-300s)"
+                            delta -= 1
+                    idx += 1
+            elif delta < 0:
+                # Trim small surplus from tail holds safely without clipping speech
+                need_cut = -delta
+                for p in reversed(planned):
+                    slack = p["target_frames"] - p["needed_frames"]
+                    if slack > 0 and need_cut > 0:
+                        take = min(slack, need_cut)
+                        p["target_frames"] -= take
+                        p["action"] += f" (-{take}f exact-300s)"
+                        need_cut -= take
+                if need_cut > 0:
+                    raise ValueError(f"Cannot trim {need_cut} frames without clipping speech.")
+
+        # Stage 3: Render frame-locked video segments & sample-locked audio slots
+        for p in planned:
+            sc = p["sc"]
+            lead_in = float(sc["lead_in_sec"])
+            orig_dur = float(sc["end_sec"]) - float(sc["start_sec"])
             seg_mp4 = work / f"{sc['id']}.mp4"
-            actual_vid_dur, action = build_scene_video_segment(
-                silent_video, sc, needed_dur, fps, seg_mp4,
-                allow_trim_dead_space=trim_dead_space,
+            actual_frames = render_scene_video_to_frames(
+                silent_video, sc, p["target_frames"], fps, seg_mp4
             )
 
             slot_wav = work / f"{sc['id']}_slot.wav"
-            pad_audio_to_slot(clean_wav, slot_wav, lead_in, actual_vid_dur)
+            pad_audio_to_frames(p["clean_wav"], slot_wav, lead_in, actual_frames, fps)
 
             video_parts.append(seg_mp4)
             audio_parts.append(slot_wav)
 
+            t_start = running_frames / fps
+            t_end = (running_frames + actual_frames) / fps
             report_scenes.append({
                 "id": sc["id"],
                 "title": sc["title"],
-                "source_audio": src_audio.name,
+                "source_audio": p["src_audio"].name,
                 "original_slot_sec": round(orig_dur, 3),
-                "final_slot_sec": round(actual_vid_dur, 3),
-                "timeline_start_sec": round(running_time, 3),
-                "timeline_end_sec": round(running_time + actual_vid_dur, 3),
-                "speech_start_sec": round(running_time + lead_in, 3),
-                "speech_end_sec": round(running_time + lead_in + audio_stats["trimmed_duration_sec"], 3),
-                "timing_action": action,
-                **audio_stats,
+                "final_slot_sec": round(actual_frames / fps, 3),
+                "frames": actual_frames,
+                "timeline_start_sec": round(t_start, 3),
+                "timeline_end_sec": round(t_end, 3),
+                "speech_start_sec": round(t_start + lead_in, 3),
+                "speech_end_sec": round(t_start + lead_in + p["audio_stats"]["trimmed_duration_sec"], 3),
+                "timing_action": p["action"],
+                **p["audio_stats"],
             })
-            running_time += actual_vid_dur
+            running_frames += actual_frames
 
-        if running_time > max_dur:
+        total_sec = running_frames / fps
+        if total_sec > max_dur:
             raise ValueError(
-                f"Synchronized duration {running_time:.2f}s exceeds maximum {max_dur:.1f}s (7 minutes)."
+                f"Synchronized duration {total_sec:.2f}s exceeds maximum {max_dur:.1f}s (7 minutes)."
             )
 
         v_list = work / "video_concat.txt"
@@ -425,13 +547,14 @@ def synchronize_project(
             ])
 
     report = {
-        "total_duration_sec": round(running_time, 3),
-        "within_7min_limit": running_time <= max_dur,
+        "total_frames": running_frames,
+        "total_duration_sec": round(total_sec, 3),
+        "within_7min_limit": total_sec <= max_dur,
         "scenes": report_scenes,
     }
     report_path = scripts_dir / "sync_report.json"
     report_path.write_text(json.dumps(report, indent=2), encoding="utf-8")
-    print(f"Synchronization complete: {running_time:.2f}s total. Report saved to {report_path}.")
+    print(f"Synchronization complete: {running_frames} frames ({total_sec:.3f}s). Report saved to {report_path}.")
     return report
 
 
